@@ -6,3 +6,9 @@
 #include <stdint.h>
 #include <assert.h>
 
+const char* readString(char* ); 
+const char* readLine(FILE*);
+const char* instToBin(char *);
+const char* regToBin(char *);
+const char* immToBin(char *);
+const char* tarToBin(char *); 
