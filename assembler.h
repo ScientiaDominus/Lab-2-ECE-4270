@@ -6,8 +6,16 @@
 #include <stdint.h>
 #include <assert.h>
 
+typedef struct {
+    char opcode[10];
+    char rd[10];
+    char rs[10];
+    char rt[10];
+    char shamt[10];
+    char funct[10];
+} bits; 
+
 const char* readString(char* ); 
-const char* readLine(FILE*);
 const char* instToBin(char *);
 const char* regToBin(char *);
 const char* immToBin(char *);

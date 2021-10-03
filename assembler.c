@@ -25,14 +25,6 @@ const char** readString(char* input)
     }
     return masterArray;
 } 
-/* This function reads in each line of the input file and feeds it to the readString function which will in turn 
-feed the input lines to teh other functions implemented in this program. It will return a single string that
-is the maximum character length of a MIPS isntruction 
-*/
-const char* readLine(FILE* fp)
-{
-    
-}
 /*This instruction takes the first part of the instrcuction (the beginning of the string until a space is reached)
 and using this information formulates the opcode and/or funct.
 */
@@ -76,7 +68,19 @@ uint32_t binToHex(char* input)
 {
 
 }
-int main()
+int main(int argc,char* argv[])
 {
+    FILE* fp;
+    char* progFile = NULL;
+    progFile = malloc(strlen(argv[1])*sizeof(char));
+    progFile = argv[1];
+    fp = fopen(progFile, "r");
+    
+    
 
+    int i = 0;
+    while()
+    {
+        
+    }
 }
