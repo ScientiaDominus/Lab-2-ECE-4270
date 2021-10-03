@@ -12,3 +12,6 @@ const char* instToBin(char *);
 const char* regToBin(char *);
 const char* immToBin(char *);
 const char* tarToBin(char *); 
+const char* stringToBin(char *);
+uint32_t binToHex(char* input);
+
