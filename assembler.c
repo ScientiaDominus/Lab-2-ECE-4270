@@ -4,9 +4,26 @@
 all of a MIPS instructions parts. This is achieved by parsing each portion of the string into seperate strings. It may
 be worth looking into making this function recursive for calls on a single string and returning each part of the string in one call.
 */
-const char* readString(char* input)
+const char** readString(char* input)
 {
-
+    char** masterArray = NULL; 
+    char* token;
+    masterArray = malloc(sizeof(char *)* 6);
+    for(int i = 0; i < 6; i++)
+    {
+        masterArray[i] = malloc(sizeof(char)*10);
+        if(masterArray[i] == NULL)
+        {
+            perror("Memory cannot accomodate any more allocations of this size!\n****Exiting now****");
+            exit(EXIT_FAILURE);
+        }
+    }
+    token = strtok(input, " ");
+    for(int i = 0; token != NULL; i++)
+    {
+        strcpy(masterArray[i], token);
+    }
+    return masterArray;
 } 
 /* This function reads in each line of the input file and feeds it to the readString function which will in turn 
 feed the input lines to teh other functions implemented in this program. It will return a single string that
@@ -56,6 +73,10 @@ It is possible for this function to convert any binary string of any length into
 can fit within a 32-bit hexadecimal.
 */
 uint32_t binToHex(char* input)
+{
+
+}
+int main()
 {
 
 }
