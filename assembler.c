@@ -31,12 +31,156 @@ and using this information formulates the opcode and/or funct.
 const char* instToBin(char* input)
 {
 
+
+
 }
 /* This function converts each part of the string that represents a register into its corresponding binary value.
 It takes in the text representation of a MIPS instruction and operates on this data to return the proper binary
 */
 const char* regToBin(char* input)
 {
+     if(input == "$zero"){
+        return "00000"
+    }
+
+
+     if(input == "$at"){
+        return "00001"
+    }
+
+    //v registers
+     if(input == "$v0"){
+        return "00010"
+    }
+
+     if(input == "$v1"){
+        return "00011"
+    }
+
+    //a registers
+     if(input == "$a0"){
+        return "00100"
+    }
+
+     if(input == "$a1"){
+        return "00101"
+    }
+
+     if(input == "$a2"){
+        return "00110"
+    }
+
+     if(input == "$a3"){
+        return "00111"
+    }
+
+    //t registers
+    if(input == "$t0"){
+        return "01000"
+    }
+
+     if(input == "$t1"){
+        return "01001"
+    }
+
+     if(input == "$t2"){
+        return "01010"
+    }
+
+     if(input == "$t3"){
+        return "01011"
+    }
+
+     if(input == "$t4"){
+        return "01100"
+    }
+
+     if(input == "$t5"){
+        return "01101"
+    }
+
+     if(input == "$t6"){
+        return "01110"
+    }
+     if(input == "$t7"){
+        return "01111"
+    }
+    
+
+    //s registers
+     if(input == "$s0"){
+        return "10000"
+    }
+
+     if(input == "$s1"){
+        return "10001"
+    }
+
+     if(input == "$s2"){
+        return "10010"
+    }
+
+     if(input == "$s3"){
+        return "10011"
+    }
+
+     if(input == "$s4"){
+        return "10100"
+    }
+
+     if(input == "$s5"){
+        return "10101"
+    }
+
+     if(input == "$s6"){
+        return "10110"
+    }
+
+     if(input == "$s7"){
+        return "10111"
+    }
+    
+     //t registers
+     if(input == "$t8"){
+        return "11000"
+    }
+
+    if(input == "$t9"){
+        return "11001"
+    }
+
+    //k registers
+    if(input == "$k0"){
+        return "11010"
+    }
+
+    if(input == "$k1"){
+        return "11011"
+    }
+
+    if(input == "$gp"){
+        return "11100"
+    }
+
+    if(input == "$sp"){
+        return "11101"
+    }
+
+    if(input == "$fp"){
+        return "11110"
+    }
+
+    if(input == "$ra"){
+        return "11111"
+    }
+
+
+
+
+
+
+
+
 
 }
 /*This function converts the hexadecimal immediate value into a binary representation and returns that as a string.
