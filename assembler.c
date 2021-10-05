@@ -175,19 +175,111 @@ const char* regToBin(char* input)
     }
 
 
-
-
-
-
-
-
-
 }
-/*This function converts the hexadecimal immediate value into a binary representation and returns that as a string.
+
+
+/*This function converts the hexadecimal or Decimal immediate value into a binary representation and returns that as a string.
 This will only be used in certain instructions (i.e. immediate or I-type instructions)
 */
 const char* immToBin(char* input)
 {
+    char *hex= "0x";
+    char* binString= (char *)malloc(17*sizeof(char));
+    //If first two characters of both strings are "0x", then handle as Hex Instruction
+    if(strncmp(input, hex, 2) == 0){
+        for(i = 2; i < 6; i++) //convert the hex into binary values
+	{
+		switch (input[i]) //check the character and convert to a 4-bit binary representation.
+		{
+			case '0':
+				strcat(binString, "0000");
+				break;
+			case '1':
+				strcat(binString, "0001");
+				break;
+			case '2':
+				strcat(binString, "0010");
+				break;
+			case '3':
+				strcat(binString, "0011");
+				break;
+			case '4':
+				strcat(binString, "0100");
+				break;
+			case '5': 
+				strcat(binString, "0101");
+				break;
+			case '6':
+				strcat(binString, "0110");
+				break;
+			case '7':
+				strcat(binString, "0111");
+				break;
+			case '8':
+				strcat(binString, "1000");
+				break;
+			case '9': 
+				strcat(binString, "1001");
+				break;
+			case 'A':
+				strcat(binString, "1010");
+				break;
+			case 'B':
+				strcat(binString, "1011");
+				break;
+			case 'C':
+				strcat(binString, "1100");
+				break;
+			case 'D':
+				strcat(binString, "1101");
+				break;
+			case 'E':
+				strcat(binString, "1110");
+				break;
+			case 'F':
+				strcat(binString, "1111");
+				break;
+		}
+	}
+	return binString;
+
+
+    }
+
+    else{ //Else handle as Decimal
+            int Dec=0;
+            Dec = atoi(input); //Converts string value to int
+            int binaryNum[16];
+            int binaryNum2[16];
+
+            int i = 0;
+            while (Dec > 0) {
+ 
+                // storing remainder in binary array
+                 binaryNum[i] = Dec % 2;
+                Dec = Dec / 2;
+                i++;
+             }
+            
+            int k=0;
+            // Indexes through array in reverse order then stores in new int array
+            for (int j = i - 1; j >= 0; j--){
+                binaryNum2[k]= binaryNum[j];
+                if(binaryNum2[k] == 1){ //Converts int to string value
+                strcat(binString, "1");
+                }
+                
+
+                else{
+
+                    strcat(binString, "0");
+                }
+            }
+    
+
+            return binString;
+
+      }
 
 }
 /*this will convert the target address used in j-type instructions to a binary string that can be concatenated 
