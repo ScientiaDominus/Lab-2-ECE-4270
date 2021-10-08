@@ -182,11 +182,22 @@ const char* instToBin(char* input)
         {
             if(data.isJ == true)
                 strcpy(data.opcode, "000010");
+            else if(data.isR == true)
+            {
+                strcpy(data.funct, "000010");
+                strcpy(data.opcode, "000000");
+            }
+
         }
         case 3:
         {
             if(data.isJ == true)
                 strcpy(data.opcode, "000011");
+            else if(data.isR == true)
+            {
+                strcpy(data.funct, "000011");
+                strcpy(data.opcode, "000000");
+            }
         }
         //i-type instructions
         case 4: 
@@ -214,11 +225,21 @@ const char* instToBin(char* input)
         {
             if(data.isI == true)
                 strcpy(data.opcode, "001000");
+            else if(data.isR == true)
+            {
+                strcpy(data.funct, "001000");
+                strcpy(data.opcode, "000000");
+            }
         }
         case 9:
         {
             if(data.isI == true)
                 strcpy(data.opcode, "001001");
+            else if(data.isR == true)
+            {
+                strcpy(data.funct, "001001");
+                strcpy(data.opcode, "000000");
+            }
         }
         case 10:
         {
