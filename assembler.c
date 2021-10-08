@@ -178,6 +178,14 @@ const char* instToBin(char* input)
     switch(instRecognize(input))
     {
         //j-type instructions
+        case 0:
+        {
+            if(data.isR == true)
+            {
+                strcpy(data.opcode, "000000");
+                strcpy(data.funct, "000000");
+            }
+        }
         case 2:
         {
             if(data.isJ == true)
@@ -250,6 +258,11 @@ const char* instToBin(char* input)
         {
             if(data.isI == true)
                 strcpy(data.opcode, "001100");
+            else if(data.isR == true)
+            {
+                strcpy(data.funct, "001100");
+                strcpy(data.opcode, "000000");
+            }
         }
         case 13:
         {
