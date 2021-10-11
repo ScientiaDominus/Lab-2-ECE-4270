@@ -354,6 +354,14 @@ const char* instToBin(char* input)
                 strcpy(data.funct, "000000");
             }
         }
+        case 1:
+        {
+            if(data.isR == true, "000001")
+            {
+                strcpy(data.opcode, "000001");
+                strcpy(data.rt, "00001");
+            }
+        }
         //j-type instructions
         case 2:
         {
@@ -451,17 +459,121 @@ const char* instToBin(char* input)
         case 16:
         {
             if(data.isI == true)
-                strcpy(data.opcode, "010000");
+                strcpy(data.funct, "010000");
         }
         case 17:
         {
             if(data.isI == true)
-                strcpy(data.opcode, "010001");
+                strcpy(data.funct, "010001");
+        }
+        case 18:
+        {
+            if(data.isR == true)
+                strcpy(data.funct, "010010");
+                strcpy(data.opcode, "000000");
+        }
+        case 19:
+        {
+            if(data.isR == true)
+                strcpy(data.funct, "010011");
+                strcpy(data.opcode, "000000");
+        }
+        case 24:
+        {
+            if(data.isR == true)
+                strcpy(data.funct, "011000");
+                strcpy(data.opcode, "000000");
+        }
+        case 25:
+        {
+            if(data.isR == true)
+                strcpy(data.funct, "011001");
+                strcpy(data.opcode, "000000");
+        }
+        case 26:
+        {
+            if(data.isR == true)
+                strcpy(data.funct, "011010");
+                strcpy(data.opcode, "000000");
+        }
+        case 27:
+        {
+            if(data.isR == true)
+                strcpy(data.funct, "011011");
+                strcpy(data.opcode, "000000");
+        }
+        case 32:
+        {
+            if(data.isI == true)
+            {
+                strcpy(data.opcode, "100000");
+            }
+            else if(data.isR == true)
+            {
+                strcpy(data.opcode, "000000");
+                strcpy(data.funct, "100000");
+            }
+        }
+        case 33:
+        {
+            if(data.isI == true)
+            {
+                strcpy(data.opcode, "100001");
+            }
+            else if(data.isR == true)
+            {
+                strcpy(data.opcode, "000000");
+                strcpy(data.funct, "100001");
+            }
+        }
+        case 34:
+        {
+            if(data.isR == true)
+            {
+                strcpy(data.opcode, "000000");
+                strcpy(data.funct, "100010");
+            }
         }
         case 35:
         {
             if(data.isI == true)
                 strcpy(data.opcode, "100011");
+            else if(data.isR == true)
+            {
+                strcpy(data.opcode, "000000");
+                strcpy(data.funct, "")
+            }
+        }
+        case 36:
+        {
+            if(data.isR == true)
+            {
+                strcpy(data.opcode, "000000");
+                strcpy(data.funct, "100100");
+            }
+        }
+        case 37:
+        {
+            if(data.isR == true)
+            {
+                strcpy(data.opcode, "000000");
+                strcpy(data.funct, "100101");
+            }
+        }
+        case 38:
+        {
+            if(data.isR == true){
+                strcpy(data.opcode, "000000");
+                strcpy(data.funct, "100110");
+            }
+        }
+        case 39:
+        {
+            if(data.isR == true)
+            {
+                strcpy(data.opcode, "000000");
+                strcpy(data.funct, "100111");
+            }
         }
         case 40:
         {
@@ -472,6 +584,14 @@ const char* instToBin(char* input)
         {
             if(data.isI == true)
                 strcpy(data.opcode, "101001");
+        }
+        case 42:
+        {
+            if(data.isR == true)
+            {
+                strcpy(data.opcode, "000000");
+                strcpy(data.funct, "101010");
+            }
         }
         case 43:
         {
