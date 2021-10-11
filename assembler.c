@@ -36,6 +36,41 @@ int instRecognize(char *inst)
         data.isI = false;
         return 2;
     }
+    else if(strcmp(inst, "sll") == 0 || strcmp(inst, "SLL") == 0)
+    {
+        data.isJ = false;
+        data.isR = true;
+        data.isI = false;
+        return 0;
+    }
+    else if(strcmp(inst, "bltz") == 0 || strcmp(inst, "BLTZ") == 0)
+    {
+        data.isJ = false;
+        data.isR = true;
+        data.isI = false;
+        return 1;
+    }
+    else if(strcmp(inst, "bgez") == 0 || strcmp(inst, "BGEZ") == 0)
+    {
+        data.isJ = false;
+        data.isR = true;
+        data.isI = false;
+        return 1;
+    }
+    else if(strcmp(inst, "srl") == 0 || strcmp(inst, "SRL") == 0)
+    {
+        data.isJ = false;
+        data.isR = true;
+        data.isI = false;
+        return 2;
+    }
+    else if(strcmp(inst, "sra") == 0 || strcmp(inst, "SRA") == 0)
+    {
+        data.isJ = false;
+        data.isR = true;
+        data.isI = false;
+        return 3;
+    }
     else if(strcmp(inst, "jal") == 0 || strcmp(inst, "JAL") == 0)
     {
         data.isJ = true;
@@ -49,6 +84,20 @@ int instRecognize(char *inst)
         data.isR = false;
         data.isJ = false;
         return 8;
+    }
+    else if(strcmp(inst, "jr") == 0 || strcmp(inst, "JR") == 0)
+    {
+        data.isJ = true;
+        data.isR = false;
+        data.isI = false;
+        return 8;
+    }
+    else if(strcmp(inst, "jalr") == 0 || strcmp(inst, "JALR") == 0)
+    {
+        data.isJ = true;
+        data.isR = false;
+        data.isI = false;
+        return 9;
     }
     else if(strcmp(inst, "addiu") == 0 || strcmp(inst, "ADDIU") == 0)
     {
@@ -78,12 +127,124 @@ int instRecognize(char *inst)
         data.isJ = false;
         return 14;
     }
+    else if(strcmp(inst, "mfhi") == 0 || strcmp(inst, "MFHI") == 0)
+    {
+        data.isJ = false;
+        data.isR = true;
+        data.isI = false;
+        return 16;
+    }
+    else if(strcmp(inst, "mthi") == 0 || strcmp(inst, "MTHI") == 0)
+    {
+        data.isJ = false;
+        data.isR = true;
+        data.isI = false;
+        return 17;
+    }
+    else if(strcmp(inst, "mflo") == 0 || strcmp(inst, "MFLO") == 0)
+    {
+        data.isJ = false;
+        data.isR = true;
+        data.isI = false;
+        return 18;
+    }
+    else if(strcmp(inst, "mtlo") == 0 || strcmp(inst, "MTLO") == 0)
+    {
+        data.isJ = false;
+        data.isR = true;
+        data.isI = false;
+        return 19;
+    }
     else if(strcmp(inst, "slti") == 0 || strcmp(inst, "SLTI") == 0)
     {
         data.isI = true;
         data.isR = false;
         data.isJ = false;
         return 10;
+    }
+    else if(strcmp(inst, "mult") == 0 || strcmp(inst, "MULT") == 0)
+    {
+        data.isJ = false;
+        data.isR = true;
+        data.isI = false;
+        return 24;
+    }
+    else if(strcmp(inst, "multu") == 0 || strcmp(inst, "MULTU") == 0)
+    {
+        data.isJ = false;
+        data.isR = true;
+        data.isI = false;
+        return 25;
+    }
+    else if(strcmp(inst, "div") == 0 || strcmp(inst, "DIV") == 0)
+    {
+        data.isJ = false;
+        data.isR = true;
+        data.isI = false;
+        return 26;
+    }
+    else if(strcmp(inst, "divu") == 0 || strcmp(inst, "DIVU") == 0)
+    {
+        data.isJ = false;
+        data.isR = true;
+        data.isI = false;
+        return 27;
+    }
+    else if(strcmp(inst, "add") == 0 || strcmp(inst, "ADD") == 0)
+    {
+        data.isJ = false;
+        data.isR = true;
+        data.isI = false;
+        return 32;
+    }
+    else if(strcmp(inst, "addu") == 0 || strcmp(inst, "ADDU") == 0)
+    {
+        data.isJ = false;
+        data.isR = true;
+        data.isI = false;
+        return 33;
+    }
+    else if(strcmp(inst, "sub") == 0 || strcmp(inst, "SUB") == 0)
+    {
+        data.isJ = false;
+        data.isR = true;
+        data.isI = false;
+        return 34;
+    }
+    else if(strcmp(inst, "subu") == 0 || strcmp(inst, "SUBU") == 0)
+    {
+        data.isJ = false;
+        data.isR = true;
+        data.isI = false;
+        return 35;
+    }
+    else if(strcmp(inst, "and") == 0 || strcmp(inst, "AND") == 0)
+    {
+        data.isJ = false;
+        data.isR = true;
+        data.isI = false;
+        return 36;
+    }
+    else if(strcmp(inst, "or") == 0 || strcmp(inst, "OR") == 0)
+    {
+        data.isJ = false;
+        data.isR = true;
+        data.isI = false;
+        return 37;
+    }
+    else if(strcmp(inst, "xor") == 0 || strcmp(inst, "XOR") == 0)
+    {
+        data.isJ = false;
+        data.isR = true;
+        data.isI = false;
+        return 38;
+    }
+    else if(strcmp(inst, "nor") == 0 || strcmp(inst, "NOR") == 0)
+    {
+        data.isJ = false;
+        data.isR = true;
+        data.isI = false;
+        return 39;
     }
     else if(strcmp(inst, "lw") == 0 || strcmp(inst, "LW") == 0)
     {
@@ -134,6 +295,13 @@ int instRecognize(char *inst)
         data.isJ = false;
         return 41;
     }
+    else if(strcmp(inst, "slt") == 0 || strcmp(inst, "SLT") == 0)
+    {
+        data.isI = false;
+        data.isR = true;
+        data.isJ = false;
+        return 42;
+    }
     else if(strcmp(inst, "beq") == 0 || strcmp(inst, "BEQ") == 0)
     {
         data.isI = true;
@@ -177,7 +345,7 @@ const char* instToBin(char* input)
 {
     switch(instRecognize(input))
     {
-        //j-type instructions
+        //SLL
         case 0:
         {
             if(data.isR == true)
@@ -186,6 +354,7 @@ const char* instToBin(char* input)
                 strcpy(data.funct, "000000");
             }
         }
+        //j-type instructions
         case 2:
         {
             if(data.isJ == true)

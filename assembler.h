@@ -18,6 +18,7 @@ typedef struct {
     bool isR;
     bool isJ;
     bool isI;
+    bool isB;
 } bits; 
 
 bits data;
