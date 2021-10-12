@@ -1,10 +1,11 @@
 #include "assembler.h"
-#include "mu-mips.h"
+//#include "mu-mips.h"
 /* This function reads the string returned for each line within the file. It converts the instruction string into 
 all of a MIPS instructions parts. This is achieved by parsing each portion of the string into seperate strings. It may
 be worth looking into making this function recursive for calls on a single string and returning each part of the string in one call.
 */
-const char** readString(char* input)
+//const char** readString(char* input)
+void readString(char* input)
 {
     //char** masterArray = NULL; 
     /*masterArray = malloc(sizeof(char *)* 6);
@@ -359,7 +360,7 @@ void instToBin(char* input)
         }
         case 1:
         {
-            if(data.isR == true, "000001")
+            if(data.isR == true)
             {
                 strcpy(data.opcode, "000001");
                 strcpy(data.rt, "00001");
@@ -472,38 +473,44 @@ void instToBin(char* input)
         case 18:
         {
             if(data.isR == true)
+            {
                 strcpy(data.funct, "010010");
                 strcpy(data.opcode, "000000");
+            }
         }
         case 19:
         {
             if(data.isR == true)
+            {
                 strcpy(data.funct, "010011");
                 strcpy(data.opcode, "000000");
+            }
         }
         case 24:
         {
             if(data.isR == true)
+            {    
                 strcpy(data.funct, "011000");
                 strcpy(data.opcode, "000000");
+            }
         }
         case 25:
         {
             if(data.isR == true)
-                strcpy(data.funct, "011001");
-                strcpy(data.opcode, "000000");
+            {    strcpy(data.funct, "011001");
+                strcpy(data.opcode, "000000");}
         }
         case 26:
         {
             if(data.isR == true)
-                strcpy(data.funct, "011010");
-                strcpy(data.opcode, "000000");
+            {    strcpy(data.funct, "011010");
+                strcpy(data.opcode, "000000");}
         }
         case 27:
         {
             if(data.isR == true)
-                strcpy(data.funct, "011011");
-                strcpy(data.opcode, "000000");
+            {    strcpy(data.funct, "011011");
+                strcpy(data.opcode, "000000");}
         }
         case 32:
         {
@@ -608,138 +615,138 @@ It takes in the text representation of a MIPS instruction and operates on this d
 */
 const char* regToBin(char* input)
 {
-     if(input == "$zero," || input == "$zero"){
+     if(strcmp(input,"$zero,") == 0 || strcmp(input,"$zero") == 0){
         return "00000";
     }
 
 
-     if(input == "$at," || input == "$at"){
+     if(strcmp(input, "$at,") == 0 || strcmp(input,"$at") == 0){
         return "00001";
     }
 
     //v registers
-     if(input == "$v0," || input == "$v0,"){
+     if(strcmp(input, "$v0,") == 0 || strcmp(input, "$v0,") == 0){
         return "00010";
     }
 
-     if(input == "$v1," || input == "$v1"){
+     if(strcmp(input, "$v1,") == 0 || strcmp(input, "$v1") == 0){
         return "00011";
     }
 
     //a registers
-     if(input == "$a0," || input == "$a0"){
+     if(strcmp(input, "$a0,") == 0 || strcmp(input, "$a0") == 0){
         return "00100";
     }
 
-     if(input == "$a1," || input == "$a1"){
+     if(strcmp(input, "$a1,") == 0 || strcmp(input, "$a1") == 0){
         return "00101";
     }
 
-     if(input == "$a2," || input == "$a2"){
+     if(strcmp(input, "$a2,") == 0 || strcmp(input, "$a2") == 0){
         return "00110";
     }
 
-     if(input == "$a3," || input == "$a3"){
+     if(strcmp(input, "$a3,") == 0 || strcmp(input, "$a3") == 0){
         return "00111";
     }
 
     //t registers
-    if(input == "$t0," || input == "$t0"){
+    if(strcmp(input, "$t0,") == 0 || strcmp(input, "$t0") == 0){
         return "01000";
     }
 
-     if(input == "$t1," || input == "$t1"){
+     if(strcmp(input, "$t1,") == 0 || strcmp(input, "$t1") == 0){
         return "01001";
     }
 
-     if(input == "$t2," || input == "$t2"){
+     if(strcmp(input, "$t2,") == 0 || strcmp(input, "$t2") == 0){
         return "01010";
     }
 
-     if(input == "$t3," || input == "$t3"){
+     if(strcmp(input, "$t3,") == 0 || strcmp(input, "$t3") == 0){
         return "01011";
     }
 
-     if(input == "$t4," || input == "$t4"){
+     if(strcmp(input, "$t4,") == 0 || strcmp(input, "$t4") == 0){
         return "01100";
     }
 
-     if(input == "$t5," || input == "$t5"){
+     if(strcmp(input, "$t5,") == 0 || strcmp(input, "$t5") == 0){
         return "01101";
     }
 
-     if(input == "$t6," || input == "$t6"){
+     if(strcmp(input, "$t6,") == 0 || strcmp(input, "$t6") == 0){
         return "01110";
     }
-     if(input == "$t7," || input == "$t7"){
+     if(strcmp(input, "$t7,") == 0 || strcmp(input, "$t7") == 0){
         return "01111";
     }
     
 
     //s registers
-     if(input == "$s0," || input == "$s0"){
+     if(strcmp(input, "$s0,") == 0 || strcmp(input, "$s0") == 0){
         return "10000";
     }
 
-     if(input == "$s1," || input == "$s1"){
+     if(strcmp(input, "$s1,") == 0 || strcmp(input, "$s1") == 0){
         return "10001";
     }
 
-     if(input == "$s2," || input == "$s2"){
+     if(strcmp(input, "$s2,") == 0 || strcmp(input, "$s2") == 0){
         return "10010";
     }
 
-     if(input == "$s3," || input == "$s3"){
+     if(strcmp(input, "$s3,") == 0 || strcmp(input, "$s3") == 0){
         return "10011";
     }
 
-     if(input == "$s4," || input == "$s4"){
+     if(strcmp(input, "$s4,") == 0 || strcmp(input, "$s4") == 0){
         return "10100";
     }
 
-     if(input == "$s5," || input == "$s5"){
+     if(strcmp(input, "$s5,") == 0 || strcmp(input, "$s5") == 0){
         return "10101";
     }
 
-     if(input == "$s6," || input == "$s6"){
+     if(strcmp(input, "$s6,") == 0 || strcmp(input, "$s6") == 0){
         return "10110";
     }
 
-     if(input == "$s7," || input == "$s7"){
+     if(strcmp(input, "$s7,") == 0 || strcmp(input, "$s7") == 0){
         return "10111";
     }
     
      //t registers
-     if(input == "$t8," || input == "$t8"){
+     if(strcmp(input, "$t8,") == 0 || strcmp(input, "$t8") == 0){
         return "11000";
     }
 
-    if(input == "$t9," || input == "$t9"){
+    if(strcmp(input, "$t9,") == 0 || strcmp(input, "$t9") == 0){
         return "11001";
     }
 
     //k registers
-    if(input == "$k0," || input == "$k0"){
+    if(strcmp(input, "$k0,") == 0 || strcmp(input, "$k0") == 0){
         return "11010";
     }
 
-    if(input == "$k1," || input == "$k1"){
+    if(strcmp(input, "$k1,") == 0 || strcmp(input, "$k1") == 0){
         return "11011";
     }
 
-    if(input == "$gp," || input == "$gp"){
+    if(strcmp(input, "$gp,") == 0 || strcmp(input, "$gp") == 0){
         return "11100";
     }
 
-    if(input == "$sp," || input == "$sp"){
+    if(strcmp(input, "$sp,") == 0 || strcmp(input, "$sp") == 0){
         return "11101";
     }
 
-    if(input == "$fp," || input == "$fp"){
+    if(strcmp(input, "$fp,") == 0 || strcmp(input, "$fp") == 0){
         return "11110";
     }
 
-    if(input == "$ra," || input == "$ra"){
+    if(strcmp(input, "$ra,") == 0 || strcmp(input, "$ra") == 0){
         return "11111";
     }
     return "00000";
@@ -959,6 +966,7 @@ const char* stringToBin()
         strcat(binary, data.target);
         return binary;
     }
+    return binary;
 }
 /*This function will convert the final string product of the string to bin function into a hexadecimal number. 
 It is possible for this function to convert any binary string of any length into a hexadecimal so long as it
@@ -993,9 +1001,13 @@ int main(int argc,char* argv[])
     printf("****Begin file read****\n");
     while(!feof(fp))
     {
-        fgets(inString, 32, fp);
-        puts(inString);
-        readString(inString);
-        fprintf(writefile, "%08X", (uint32_t)(binToHex(stringToBin())));
+        if(fgets(inString, 24, fp) != NULL)
+        {
+            puts(inString);
+            readString(inString);
+            fprintf(writefile, "%08X", (uint32_t)(binToHex((char *)stringToBin())));
+        }
+        else
+            break;
     }
 }

@@ -16,14 +16,14 @@ strings info;
 //might use a global version of this instead of an array of character strings to get each of the elements of the binary string
 //To be determined however, currently still working with a character array.
 typedef struct {
-    char opcode[6];
-    char rd[5];
-    char rs[5];
-    char rt[5];
-    char shamt[5];
-    char funct[6];
-    char imm[16];
-    char target[26];
+    char opcode[7];
+    char rd[6];
+    char rs[6];
+    char rt[6];
+    char shamt[6];
+    char funct[7];
+    char imm[17];
+    char target[27];
     bool isR;
     bool isJ;
     bool isI;
@@ -32,7 +32,7 @@ typedef struct {
 
 bits data;
 
-const char** readString(char* ); 
+void readString(char* ); 
 void instToBin(char *);
 const char* regToBin(char *);
 const char* immToBin(char *);
