@@ -27,12 +27,21 @@ void readString(char* input)
         token = strtok(NULL, " ");
         i++;
     }
+    for(int i = 0; i < 6; i++)
+    {
+        printf("%s", info.tokens[i]);
+    }
+    printf("\n");
     //return masterArray;
 }
 /*This function takes the instruction string generated elsewhere and returns a corresponging integer for ease of use in instrcution recognition logic
 */
 int instRecognize(char *inst)
 {
+    data.isI = false;
+    data.isR = false;
+    data.isJ = false;
+    data.isB = false;
     if(strcmp(inst, "j") == 0 || strcmp(inst, "J") == 0)
     {
         data.isJ = true;
@@ -334,6 +343,14 @@ int instRecognize(char *inst)
         data.isJ = false;
         return 7;
     }
+    else if(strcmp(inst, "syscall") == 0 || strcmp(inst, "SYSCALL") == 0)
+    {
+        data.isI = false;
+        data.isR = false;
+        data.isJ = false;
+        data.syscalled = true;
+        return 100;
+    }
     else
     {
         data.isI = false;
@@ -608,6 +625,16 @@ void instToBin(char* input)
             if(data.isI == true)
                 strcpy(data.opcode, "101011");
         }
+        case 100:
+        {
+            strcpy(data.opcode, "000000");
+            strcpy(data.rd, "00000");
+            strcpy(data.rs, "00000");
+            strcpy(data.rt, "00000");
+            strcpy(data.shamt, "00000");
+            strcpy(data.funct, "001100");
+            data.syscalled = true;
+        }
     }
 }
 /* This function converts each part of the string that represents a register into its corresponding binary value.
@@ -757,10 +784,10 @@ const char* regToBin(char* input)
 /*This function converts the hexadecimal or Decimal immediate value into a binary representation and returns that as a string.
 This will only be used in certain instructions (i.e. immediate or I-type instructions)
 */
-const char* immToBin(char* input)
+void immToBin(char* input)
 {
     char *hex= "0x";
-    char* binString= (char *)malloc(17*sizeof(char));
+    char* binString= malloc(17*sizeof(char));
     //If first two characters of both strings are "0x", then handle as Hex Instruction
     if(strncmp(input, hex, 2) == 0){
         for(int i = 2; i < 6; i++) //convert the hex into binary values
@@ -815,11 +842,13 @@ const char* immToBin(char* input)
 			case 'F':
 				strcat(binString, "1111");
 				break;
+            case '\0':
+                strcat(binString, "0000");
+                break;
 		}
 	}
-	return binString;
-
-
+    strcpy(data.imm, binString);
+    free(binString);
     }
 
     else{ //Else handle as Decimal
@@ -851,10 +880,7 @@ const char* immToBin(char* input)
                     strcat(binString, "0");
                 }
             }
-    
-
-            return binString;
-
+            strcpy(data.imm, binString);
       }
 
 }
@@ -932,7 +958,7 @@ transform all of them into one readable binary string that can be converted into
 //const char* stringToBin(char* input)
 const char* stringToBin()
 {
-    char* binary = malloc(32*sizeof(char));
+    char* binary = malloc(33*sizeof(char));
     instToBin(info.tokens[0]);
     if(data.isR == true)
     {
@@ -952,7 +978,7 @@ const char* stringToBin()
     {
         strcpy(data.rt, regToBin(info.tokens[1]));
         strcpy(data.rs, regToBin(info.tokens[2]));
-        strcpy(data.imm, immToBin(info.tokens[3]));
+        immToBin(info.tokens[3]);
         strcat(binary, data.opcode);
         strcat(binary, data.rs);
         strcat(binary, data.rt);
@@ -964,6 +990,16 @@ const char* stringToBin()
         strcpy(data.target, tarToBin(info.tokens[1]));
         strcat(binary, data.opcode);
         strcat(binary, data.target);
+        return binary;
+    }
+    else if(data.syscalled == true)
+    {
+        strcat(binary, data.opcode);
+        strcat(binary, data.rs);
+        strcat(binary, data.rt);
+        strcat(binary, data.rd);
+        strcat(binary, data.shamt);
+        strcat(binary, data.funct);
         return binary;
     }
     return binary;
@@ -984,30 +1020,53 @@ uint32_t binToHex(char* input)
 			result += pow(2, ((size - 1)-i)); //add the value of each place raised to the proper value. i.e. the first digit is added as 2 raised to the 0th power and the third digit is added as 2 raised to the 2nd power
 		}
 	}
+    printf("binToHex Call: %08X\n", result);
 	return result;
+}
+void initialize()
+{
+    data.opcode = malloc(7*sizeof(char));
+    data.rd = malloc(6*sizeof(char));
+    data.rs = malloc(6*sizeof(char));
+    data.rt = malloc(6*sizeof(char));
+    data.shamt = malloc(6*sizeof(char));
+    data.funct = malloc(7*sizeof(char));
+    data.imm = malloc(17*sizeof(char));
+    data.target = malloc(27*sizeof(char));
+    data.isR = false;
+    data.isI = false;
+    data.isJ = false;
+    data.isB = false;
+    data.syscalled = false;
+    info.tokens = malloc(6*sizeof(char*));
+    for(int i = 0; i < 6; i++)
+    {
+        info.tokens[i] = malloc(10*sizeof(char));
+    }
 }
 int main(int argc,char* argv[])
 {
     FILE* fp;
     FILE* writefile;
     char* progFile = NULL;
-    progFile = malloc(strlen(argv[1])*sizeof(char));
+    progFile = malloc(strlen(argv[1])*sizeof(char)); //make sure the 
     progFile = argv[1];
     fp = fopen(progFile, "r");
-    writefile = fopen("output.txt", "w");
+    writefile = fopen("output.txt", "w"); //create the file for output 
     char* inString = malloc(24*sizeof(char));
-    
+    char* binString;
+    initialize();
     //needs to read from the file line by line to convert each line into a hex code that can be printed into a file. 
     printf("****Begin file read****\n");
-    while(!feof(fp))
+    while(fgets(inString, 24, fp))
     {
-        if(fgets(inString, 24, fp) != NULL)
-        {
-            puts(inString);
-            readString(inString);
-            fprintf(writefile, "%08X", (uint32_t)(binToHex((char *)stringToBin())));
-        }
-        else
-            break;
+        puts(inString);
+        readString(inString);
+        binString = (char *)stringToBin();
+        fprintf(writefile, "%08X\n", (uint32_t)(binToHex((char *)binString)));
+        free(binString);
     }
+    free(inString);
+    fclose(fp);
+    fclose(writefile);
 }
