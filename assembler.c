@@ -6,9 +6,8 @@ be worth looking into making this function recursive for calls on a single strin
 */
 const char** readString(char* input)
 {
-    char** masterArray = NULL; 
-    char* token;
-    masterArray = malloc(sizeof(char *)* 6);
+    //char** masterArray = NULL; 
+    /*masterArray = malloc(sizeof(char *)* 6);
     for(int i = 0; i < 6; i++)
     {
         masterArray[i] = malloc(sizeof(char)*10);
@@ -17,13 +16,17 @@ const char** readString(char* input)
             perror("Memory cannot accomodate any more allocations of this size!\n****Exiting now****");
             exit(EXIT_FAILURE);
         }
-    }
+    }*/
+    int i = 0;
+    char* token;
     token = strtok(input, " ");
-    for(int i = 0; token != NULL; i++)
+    while(token != NULL)
     {
-        strcpy(masterArray[i], token);
+        strcpy(info.tokens[i], token);
+        token = strtok(NULL, " ");
+        i++;
     }
-    return masterArray;
+    //return masterArray;
 }
 /*This function takes the instruction string generated elsewhere and returns a corresponging integer for ease of use in instrcution recognition logic
 */
@@ -338,10 +341,10 @@ int instRecognize(char *inst)
         return 1000;
     }    
 }
-/*This instruction takes the first part of the instrcuction (the beginning of the string until a space is reached)
+/*This instruction takes the first part of the instruction (the beginning of the string until a space is reached)
 and using this information formulates the opcode and/or funct.
 */
-const char* instToBin(char* input)
+void instToBin(char* input)
 {
     switch(instRecognize(input))
     {
@@ -605,141 +608,141 @@ It takes in the text representation of a MIPS instruction and operates on this d
 */
 const char* regToBin(char* input)
 {
-     if(input == "$zero"){
+     if(input == "$zero," || input == "$zero"){
         return "00000"
     }
 
 
-     if(input == "$at"){
+     if(input == "$at," || input == "$at"){
         return "00001"
     }
 
     //v registers
-     if(input == "$v0"){
+     if(input == "$v0," || input == "$v0,"){
         return "00010"
     }
 
-     if(input == "$v1"){
+     if(input == "$v1," || input == "$v1"){
         return "00011"
     }
 
     //a registers
-     if(input == "$a0"){
+     if(input == "$a0," || input == "$a0"){
         return "00100"
     }
 
-     if(input == "$a1"){
+     if(input == "$a1," || input == "$a1"){
         return "00101"
     }
 
-     if(input == "$a2"){
+     if(input == "$a2," || input == "$a2"){
         return "00110"
     }
 
-     if(input == "$a3"){
+     if(input == "$a3," || input == "$a3"){
         return "00111"
     }
 
     //t registers
-    if(input == "$t0"){
+    if(input == "$t0," || input == "$t0"){
         return "01000"
     }
 
-     if(input == "$t1"){
+     if(input == "$t1," || input == "$t1"){
         return "01001"
     }
 
-     if(input == "$t2"){
+     if(input == "$t2," || input == "$t2"){
         return "01010"
     }
 
-     if(input == "$t3"){
+     if(input == "$t3," || input == "$t3"){
         return "01011"
     }
 
-     if(input == "$t4"){
+     if(input == "$t4," || input == "$t4"){
         return "01100"
     }
 
-     if(input == "$t5"){
+     if(input == "$t5," || input == "$t5"){
         return "01101"
     }
 
-     if(input == "$t6"){
+     if(input == "$t6," || input == "$t6"){
         return "01110"
     }
-     if(input == "$t7"){
+     if(input == "$t7," || input == "$t7"){
         return "01111"
     }
     
 
     //s registers
-     if(input == "$s0"){
+     if(input == "$s0," || input == "$s0"){
         return "10000"
     }
 
-     if(input == "$s1"){
+     if(input == "$s1," || input == "$s1"){
         return "10001"
     }
 
-     if(input == "$s2"){
+     if(input == "$s2," || input == "$s2"){
         return "10010"
     }
 
-     if(input == "$s3"){
+     if(input == "$s3," || input == "$s3"){
         return "10011"
     }
 
-     if(input == "$s4"){
+     if(input == "$s4," || input == "$s4"){
         return "10100"
     }
 
-     if(input == "$s5"){
+     if(input == "$s5," || input == "$s5"){
         return "10101"
     }
 
-     if(input == "$s6"){
+     if(input == "$s6," || input == "$s6"){
         return "10110"
     }
 
-     if(input == "$s7"){
+     if(input == "$s7," || input == "$s7"){
         return "10111"
     }
     
      //t registers
-     if(input == "$t8"){
+     if(input == "$t8," || input == "$t8"){
         return "11000"
     }
 
-    if(input == "$t9"){
+    if(input == "$t9," || input == "$t9"){
         return "11001"
     }
 
     //k registers
-    if(input == "$k0"){
+    if(input == "$k0," || input == "$k0"){
         return "11010"
     }
 
-    if(input == "$k1"){
+    if(input == "$k1," || input == "$k1"){
         return "11011"
     }
 
-    if(input == "$gp"){
+    if(input == "$gp," || input == "$gp"){
         return "11100"
     }
 
-    if(input == "$sp"){
+    if(input == "$sp," || input == "$sp"){
         return "11101"
     }
 
-    if(input == "$fp"){
+    if(input == "$fp," || input == "$fp"){
         return "11110"
     }
 
-    if(input == "$ra"){
+    if(input == "$ra," || input == "$ra"){
         return "11111"
     }
-
+    return "00000";
 
 }
 
@@ -853,14 +856,94 @@ onto the end of the rest of the binary string.
 */
 const char* tarToBin(char* input)
 {
-
+    char *hex= "0x";
+    char* binString= (char *)malloc(27*sizeof(char));
+    //If first two characters of both strings are "0x", then handle as Hex Instruction
+    if(strncmp(input, hex, 2) == 0){
+    for(i = 2; i < 14; i++) //convert the hex into binary values
+	{
+		switch (input[i]) //check the character and convert to a 4-bit binary representation.
+		{
+			case '0':
+				strcat(binString, "0000");
+				break;
+			case '1':
+				strcat(binString, "0001");
+				break;
+			case '2':
+				strcat(binString, "0010");
+				break;
+			case '3':
+				strcat(binString, "0011");
+				break;
+			case '4':
+				strcat(binString, "0100");
+				break;
+			case '5': 
+				strcat(binString, "0101");
+				break;
+			case '6':
+				strcat(binString, "0110");
+				break;
+			case '7':
+				strcat(binString, "0111");
+				break;
+			case '8':
+				strcat(binString, "1000");
+				break;
+			case '9': 
+				strcat(binString, "1001");
+				break;
+			case 'A':
+				strcat(binString, "1010");
+				break;
+			case 'B':
+				strcat(binString, "1011");
+				break;
+			case 'C':
+				strcat(binString, "1100");
+				break;
+			case 'D':
+				strcat(binString, "1101");
+				break;
+			case 'E':
+				strcat(binString, "1110");
+				break;
+			case 'F':
+				strcat(binString, "1111");
+				break;
+		}
+	}
+	return binString;
+    }
+    else 
+        return binString;
 }
 /*This function will concatenate all the strings generated by the other functions into one long string that can 
 transform all of them into one readable binary string that can be converted into a hexadecimal number. 
 */
-const char* stringToBin(char* input)
+//const char* stringToBin(char* input)
+void stringToBin()
 {
-
+    char* binary = malloc()
+    instToBin(info.tokens[0]);
+    if(data.isR == true)
+    {
+        strcpy(data.rd, regToBin(info.tokens[1]));
+        strcpy(data.rs, regToBin(info.tokens[2]));
+        strcpy(data.rt, regToBin(info.tokens[3]));
+        strcpy(data.shamt, regToBin(info.tokens[4]));
+    }
+    else if(data.isI == true)
+    {
+        strcpy(data.rt, regToBin(info.tokens[1]));
+        strcpy(data.rs, regToBin(info.tokens[2]));
+        strcpy(data.imm, immToBin(info.tokens[3]));
+    }
+    else if(data.isJ == true)
+    {
+        strcpy(data.target, tarToBin(info.tokens[1]));
+    }
 }
 /*This function will convert the final string product of the string to bin function into a hexadecimal number. 
 It is possible for this function to convert any binary string of any length into a hexadecimal so long as it
@@ -872,17 +955,21 @@ uint32_t binToHex(char* input)
 }
 int main(int argc,char* argv[])
 {
-    FILE* fp;
+    FILE* fp, writefile;
     char* progFile = NULL;
     progFile = malloc(strlen(argv[1])*sizeof(char));
     progFile = argv[1];
     fp = fopen(progFile, "r");
-    
+    writefile = fopen("output.txt", "w");
+    char* inString = malloc(24*sizeof(char));
     
     //needs to read from the file line by line to convert each line into a hex code that can be printed into a file. 
-    int i = 0;
-    while()
+    printf("****Begin file read****\n");
+    while(!feof(fp))
     {
-        
+        fgets(inString, 32, fp);
+        puts(inString);
+        readString(inString);
+        stringToBin()
     }
 }
