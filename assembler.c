@@ -544,7 +544,7 @@ void instToBin(char* input)
             else if(data.isR == true)
             {
                 strcpy(data.opcode, "000000");
-                strcpy(data.funct, "")
+                strcpy(data.funct, "");
             }
         }
         case 36:
@@ -609,138 +609,138 @@ It takes in the text representation of a MIPS instruction and operates on this d
 const char* regToBin(char* input)
 {
      if(input == "$zero," || input == "$zero"){
-        return "00000"
+        return "00000";
     }
 
 
      if(input == "$at," || input == "$at"){
-        return "00001"
+        return "00001";
     }
 
     //v registers
      if(input == "$v0," || input == "$v0,"){
-        return "00010"
+        return "00010";
     }
 
      if(input == "$v1," || input == "$v1"){
-        return "00011"
+        return "00011";
     }
 
     //a registers
      if(input == "$a0," || input == "$a0"){
-        return "00100"
+        return "00100";
     }
 
      if(input == "$a1," || input == "$a1"){
-        return "00101"
+        return "00101";
     }
 
      if(input == "$a2," || input == "$a2"){
-        return "00110"
+        return "00110";
     }
 
      if(input == "$a3," || input == "$a3"){
-        return "00111"
+        return "00111";
     }
 
     //t registers
     if(input == "$t0," || input == "$t0"){
-        return "01000"
+        return "01000";
     }
 
      if(input == "$t1," || input == "$t1"){
-        return "01001"
+        return "01001";
     }
 
      if(input == "$t2," || input == "$t2"){
-        return "01010"
+        return "01010";
     }
 
      if(input == "$t3," || input == "$t3"){
-        return "01011"
+        return "01011";
     }
 
      if(input == "$t4," || input == "$t4"){
-        return "01100"
+        return "01100";
     }
 
      if(input == "$t5," || input == "$t5"){
-        return "01101"
+        return "01101";
     }
 
      if(input == "$t6," || input == "$t6"){
-        return "01110"
+        return "01110";
     }
      if(input == "$t7," || input == "$t7"){
-        return "01111"
+        return "01111";
     }
     
 
     //s registers
      if(input == "$s0," || input == "$s0"){
-        return "10000"
+        return "10000";
     }
 
      if(input == "$s1," || input == "$s1"){
-        return "10001"
+        return "10001";
     }
 
      if(input == "$s2," || input == "$s2"){
-        return "10010"
+        return "10010";
     }
 
      if(input == "$s3," || input == "$s3"){
-        return "10011"
+        return "10011";
     }
 
      if(input == "$s4," || input == "$s4"){
-        return "10100"
+        return "10100";
     }
 
      if(input == "$s5," || input == "$s5"){
-        return "10101"
+        return "10101";
     }
 
      if(input == "$s6," || input == "$s6"){
-        return "10110"
+        return "10110";
     }
 
      if(input == "$s7," || input == "$s7"){
-        return "10111"
+        return "10111";
     }
     
      //t registers
      if(input == "$t8," || input == "$t8"){
-        return "11000"
+        return "11000";
     }
 
     if(input == "$t9," || input == "$t9"){
-        return "11001"
+        return "11001";
     }
 
     //k registers
     if(input == "$k0," || input == "$k0"){
-        return "11010"
+        return "11010";
     }
 
     if(input == "$k1," || input == "$k1"){
-        return "11011"
+        return "11011";
     }
 
     if(input == "$gp," || input == "$gp"){
-        return "11100"
+        return "11100";
     }
 
     if(input == "$sp," || input == "$sp"){
-        return "11101"
+        return "11101";
     }
 
     if(input == "$fp," || input == "$fp"){
-        return "11110"
+        return "11110";
     }
 
     if(input == "$ra," || input == "$ra"){
-        return "11111"
+        return "11111";
     }
     return "00000";
 
@@ -756,7 +756,7 @@ const char* immToBin(char* input)
     char* binString= (char *)malloc(17*sizeof(char));
     //If first two characters of both strings are "0x", then handle as Hex Instruction
     if(strncmp(input, hex, 2) == 0){
-        for(i = 2; i < 6; i++) //convert the hex into binary values
+        for(int i = 2; i < 6; i++) //convert the hex into binary values
 	{
 		switch (input[i]) //check the character and convert to a 4-bit binary representation.
 		{
@@ -860,7 +860,7 @@ const char* tarToBin(char* input)
     char* binString= (char *)malloc(27*sizeof(char));
     //If first two characters of both strings are "0x", then handle as Hex Instruction
     if(strncmp(input, hex, 2) == 0){
-    for(i = 2; i < 14; i++) //convert the hex into binary values
+    for(int i = 2; i < 14; i++) //convert the hex into binary values
 	{
 		switch (input[i]) //check the character and convert to a 4-bit binary representation.
 		{
@@ -923,9 +923,9 @@ const char* tarToBin(char* input)
 transform all of them into one readable binary string that can be converted into a hexadecimal number. 
 */
 //const char* stringToBin(char* input)
-void stringToBin()
+const char* stringToBin()
 {
-    char* binary = malloc()
+    char* binary = malloc(32*sizeof(char));
     instToBin(info.tokens[0]);
     if(data.isR == true)
     {
@@ -933,16 +933,31 @@ void stringToBin()
         strcpy(data.rs, regToBin(info.tokens[2]));
         strcpy(data.rt, regToBin(info.tokens[3]));
         strcpy(data.shamt, regToBin(info.tokens[4]));
+        strcat(binary, data.opcode);
+        strcat(binary, data.rs);
+        strcat(binary, data.rt);
+        strcat(binary, data.rd);
+        strcat(binary, data.shamt);
+        strcat(binary, data.funct);
+        return binary;
     }
     else if(data.isI == true)
     {
         strcpy(data.rt, regToBin(info.tokens[1]));
         strcpy(data.rs, regToBin(info.tokens[2]));
         strcpy(data.imm, immToBin(info.tokens[3]));
+        strcat(binary, data.opcode);
+        strcat(binary, data.rs);
+        strcat(binary, data.rt);
+        strcat(binary, data.imm);
+        return binary;
     }
     else if(data.isJ == true)
     {
         strcpy(data.target, tarToBin(info.tokens[1]));
+        strcat(binary, data.opcode);
+        strcat(binary, data.target);
+        return binary;
     }
 }
 /*This function will convert the final string product of the string to bin function into a hexadecimal number. 
@@ -951,11 +966,22 @@ can fit within a 32-bit hexadecimal.
 */
 uint32_t binToHex(char* input)
 {
-
+    uint32_t result = 0;
+    int size = 0;
+    size = strlen(input);
+	for(int i = size - 1; i >= 0; i--) //iterate through each character of the string
+	{
+		if(input[i] == '1')
+		{
+			result += pow(2, ((size - 1)-i)); //add the value of each place raised to the proper value. i.e. the first digit is added as 2 raised to the 0th power and the third digit is added as 2 raised to the 2nd power
+		}
+	}
+	return result;
 }
 int main(int argc,char* argv[])
 {
-    FILE* fp, writefile;
+    FILE* fp;
+    FILE* writefile;
     char* progFile = NULL;
     progFile = malloc(strlen(argv[1])*sizeof(char));
     progFile = argv[1];
@@ -970,6 +996,6 @@ int main(int argc,char* argv[])
         fgets(inString, 32, fp);
         puts(inString);
         readString(inString);
-        stringToBin()
+        fprintf(writefile, "%08X", (uint32_t)(binToHex(stringToBin())));
     }
 }

@@ -23,6 +23,7 @@ typedef struct {
     char shamt[5];
     char funct[6];
     char imm[16];
+    char target[26];
     bool isR;
     bool isJ;
     bool isI;
@@ -37,7 +38,7 @@ const char* regToBin(char *);
 const char* immToBin(char *);
 const char* tarToBin(char *); 
 //const char* stringToBin(char *);
-void stringToBin();
+const char* stringToBin();
 int instRecognize(char *);
 uint32_t binToHex(char* input);
 
