@@ -1,0 +1,32 @@
+LUI $v1 0x1000
+ADDIU $a1 $zero 0xFF
+ADD $a2 $a1 $a1
+ADD $a3 $a2 $a2
+ADDIU $t0 $a3 0x7530
+SW $a1 0x0($v1)
+SW $a2 0x4($v1)
+SW $a3 0x8($v1)
+SW $t0 0xC($v1)
+LW $t1 0x0($v1)
+LW $t2 0x4($v1)
+LW $t3 0x8($v1)
+LW $t4 0xC($v1)
+ADDIU $v1 $v1 0x4
+SW $a1 0x0($v1)
+SW $a2 0x4($v1)
+SW $a3 0x8($v1)
+SW $t0 0xC($v1)
+LW $t5 0xFFFC($v1)
+LW $t6 0x0($v1)
+LW $t7 0x4($v1)
+LW $s0 0x8($v1)
+ADD $s1 $zero $t1
+ADD $s1 $s1 $t2
+ADD $s1 $s1 $t3
+ADD $s1 $s1 $t4
+ADD $s1 $s1 $t5
+ADD $s1 $s1 $t6
+ADD $s1 $s1 $t7
+ADD $s1 $s1 $s0
+ADDIU $v0 $zero 0xA
+SYSCALL
