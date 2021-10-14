@@ -24,7 +24,18 @@ void readString(char* input)
     while(token != NULL)
     {
         strcpy(info.tokens[i], token);
-        token = strtok(NULL, " ");
+        instRecognize(info.tokens[0]);
+        if(data.isMem == true && i == 2 && token[strlen(token)] == ')')
+        {
+            token = strtok(NULL, "(");
+            strcpy(info.tokens[i], token);
+            token = strtok(NULL, ")");
+            strcpy(info.tokens[3], token);
+        }
+        else
+        {
+            token = strtok(NULL, " ");
+        }
         i++;
     }
     for(int i = 0; i < 6; i++)
@@ -318,10 +329,11 @@ int instRecognize(char *inst)
     }
     else if(strcmp(inst, "lui") == 0 || strcmp(inst, "LUI") == 0)
     {
-        data.isI = true;
+        data.isI = false;
         data.isR = false;
         data.isJ = false;
         data.isMem = false;
+        data.isB = true;
         return 15;
     }
     else if(strcmp(inst, "sw") == 0 || strcmp(inst, "SW") == 0)
@@ -551,7 +563,7 @@ void instToBin(char* input)
         }
         case 15:
         {
-            if(data.isI == true)
+            if(data.isB == true)
             {    strcpy(data.opcode, "001111");
                 break;}
         }
@@ -890,20 +902,26 @@ This will only be used in certain instructions (i.e. immediate or I-type instruc
 */
 void immToBin(char* input)
 {
-    char *hex= "0x";
+    //char *hex= "0x";
     char* binString= malloc(17*sizeof(char));
-    int i = 2;
-    int j = 6;
+    int i, j, k;
+    j = 6;
+    k = 2;
     //If first two characters of both strings are "0x", then handle as Hex Instruction
-    if(strncmp(input, hex, 2) == 0)
+    if(true)
     {
-        if(input[strlen(input)] == ')')
+        if(strlen(input) != 6)
         {
-            j = strlen(input) - 5;
+            k = 0;
+            j = 4;
         }
-        for(i = j; i > 2; i--) //convert the hex into binary values
+        for(i = k; i < j; i++) //convert the hex into binary values
         {
-            
+            /*if(input[i] == '(')
+            {
+                strncpy(data.rs, &input[strlen(input)-3], 3);
+                break;
+            }*/
             switch (input[i]) //check the character and convert to a 4-bit binary representation.
             {
                 case '0':
@@ -961,13 +979,10 @@ void immToBin(char* input)
                     strcat(binString, "0000");
                     break;
             }
-            if(input[i] == '(')
-            {
-                strncpy(data.rs, &input[strlen(input)-3], 3);
-            }
+            
         }
-        strcpy(data.imm, binString);
-        free(binString);
+            strcpy(data.imm, binString);   
+            free(binString);
     }
 
     else{ //Else handle as Decimal
@@ -1081,6 +1096,9 @@ transform all of them into one readable binary string that can be converted into
 //const char* stringToBin(char* input)
 const char* stringToBin()
 {
+    int targetlen = 32;
+    int padlen = 0;
+    const char* padding = "0000000000";
     char* binary = malloc(33*sizeof(char));
     instToBin(info.tokens[0]);
     if(data.isR == true)
@@ -1095,8 +1113,25 @@ const char* stringToBin()
         strcat(binary, data.rd);
         strcat(binary, data.shamt);
         strcat(binary, data.funct);
-        strcpy(binary, (char *)StringPadRight(binary));
+        //strcpy(binary, (char *)StringPadRight(binary));
+        padlen = targetlen - strlen(binary);
+        sprintf(binary, "%s%*.*s", binary, padlen, padlen, padding );
         printf("STRINGTOBIN R-type call: %s\n", binary);
+        return binary;
+    }
+    else if(data.isB == true)
+    {
+        strcpy(data.rt, regToBin(info.tokens[1]));
+        strcpy(data.rs, "00000");
+        immToBin(info.tokens[2]);
+        strcat(binary, data.opcode);
+        strcat(binary, data.rs);
+        strcat(binary, data.rt);
+        strcat(binary, data.imm);
+        //strcpy(binary, (char *)StringPadRight(binary));
+        padlen = targetlen - strlen(binary);
+        sprintf(binary, "%s%*.*s", binary, padlen, padlen, padding );
+        printf("STRINGTOBIN I-type call: %s\n", binary);
         return binary;
     }
     else if(data.isI == true)
@@ -1108,20 +1143,23 @@ const char* stringToBin()
         strcat(binary, data.rs);
         strcat(binary, data.rt);
         strcat(binary, data.imm);
-        strcpy(binary, (char *)StringPadRight(binary));
+        //strcpy(binary, (char *)StringPadRight(binary));
+        padlen = targetlen - strlen(binary);
+        sprintf(binary, "%s%*.*s", binary, padlen, padlen, padding );
         printf("STRINGTOBIN I-type call: %s\n", binary);
         return binary;
     }
     else if(data.isMem == true)
     {
         strcpy(data.rt, regToBin(info.tokens[1]));
-        //strcpy(data.rs, regToBin(info.tokens[2]));
+        strcpy(data.rs, regToBin(info.tokens[3]));
         immToBin(info.tokens[2]);
         strcat(binary, data.opcode);
         strcat(binary, data.rs);
         strcat(binary, data.rt);
         strcat(binary, data.imm);
-        strcpy(binary, (char *)StringPadRight(binary));
+        padlen = targetlen - strlen(binary);
+        sprintf(binary, "%s%*.*s", binary, padlen, padlen, padding );
         printf("STRINGTOBIN I-type call: %s\n", binary);
         return binary;
     }
@@ -1130,7 +1168,9 @@ const char* stringToBin()
         strcpy(data.target, tarToBin(info.tokens[1]));
         strcat(binary, data.opcode);
         strcat(binary, data.target);
-        strcpy(binary, (char *)StringPadRight(binary));
+        //strcpy(binary, (char *)StringPadRight(binary));
+        padlen = targetlen - strlen(binary);
+        sprintf(binary, "%s%*.*s", binary, padlen, padlen, padding );
         printf("STRINGTOBIN J-type call: %s\n", binary);
         return binary;
     }
@@ -1142,7 +1182,9 @@ const char* stringToBin()
         strcat(binary, data.rd);
         strcat(binary, data.shamt);
         strcat(binary, data.funct);
-        strcpy(binary, (char *)StringPadRight(binary));
+        //strcpy(binary, (char *)StringPadRight(binary));
+        padlen = targetlen - strlen(binary);
+        sprintf(binary, "%s%*.*s", binary, padlen, padlen, padding );
         printf("STRINGTOBIN SYSCALL call: %s\n", binary);
         return binary;
     }
