@@ -28,6 +28,7 @@ typedef struct {
     bool isJ;
     bool isI;
     bool isB;
+    bool isMem;
     bool syscalled;
 } bits; 
 
@@ -43,4 +44,5 @@ const char* stringToBin();
 int instRecognize(char *);
 uint32_t binToHex(char* input);
 void initialize();
+char* StringPadRight(char* input);
 
