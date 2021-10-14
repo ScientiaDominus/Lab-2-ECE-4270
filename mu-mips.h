@@ -1,5 +1,6 @@
 #include <stdint.h>
 #include <math.h>
+#include "assembler.h"
 
 #define FALSE 0
 #define TRUE  1
